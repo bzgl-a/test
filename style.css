@@ -60,7 +60,7 @@ a {
 
 .button:hover {
   background-color: #f0f0f0;
-  transform: scale(1.1);
+  /* transform: scale(1.1); */
 }
 
 .visually-hidden {
@@ -580,11 +580,6 @@ input:focus {
   scale: 1.1;
 }
 
-.service__button {
-  padding-block: 10px;
-  width: 50%;
-}
-
 .main {
   padding-block: 100px;
 }
@@ -731,6 +726,45 @@ input:focus {
   right: -60px;
 }
 
+.cookie__banner {
+  position: fixed;
+  bottom: 25px;
+  right: -150px;
+  width: 750px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 10px;
+  padding: 15px 30px;
+
+  background-color: #fff;
+  color: #000;
+  box-shadow: 0px 5px 40px 0px rgba(34, 60, 80, 0.2);
+
+  border-radius: 25px;
+
+  transform: translateX(-50%);
+
+  text-align: center;
+  /* font-size: 14px; */
+  z-index: 9999;
+}
+
+.cookie__button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 1px solid #000;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.cookie__button:hover {
+  background-color: #e8e8e8;
+}
+
 /* анимация при скролле */
 
 /* .about-us {
@@ -802,7 +836,38 @@ input:focus {
   scroll-behavior: smooth;
 }
 
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.warning__wrapper {
+  position: relative;
+}
+
+.warning__text {
+  position: absolute;
+  bottom: -22px;
+  left: 10px;
+  color: red;
+}
+
+@media (max-width: 1200px) {
+  .cookie__banner {
+    left: 50%;
+    max-width: 700px;
+  }
+}
+
 @media (max-width: 950px) {
+  .cookie__banner {
+    bottom: 60px;
+    max-width: 650px;
+  }
+
   .burger__wrapper {
     display: flex;
   }
@@ -878,6 +943,13 @@ input:focus {
 }
 
 @media (max-width: 710px) {
+  .cookie__banner {
+    flex-direction: column;
+    row-gap: 10px;
+    bottom: 28px;
+    width: 85%;
+  }
+
   .main {
     padding-bottom: 30px;
   }
@@ -948,15 +1020,15 @@ input:focus {
   }
 
   .services__item:nth-child(1) {
-    top: 130px;
+    top: 110px;
   }
 
   .services__item:nth-child(2) {
-    top: 190px;
+    top: 170px;
   }
 
   .services__item:nth-child(3) {
-    top: 250px;
+    top: 230px;
   }
 
   .checkbox__group {

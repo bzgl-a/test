@@ -117,6 +117,14 @@
       </ul>
     </div>
 
+    <div class="cookie__banner">
+      <p class="cookie__text">
+        Мы используем файлы cookie для улучшения работы сайта. Продолжая
+        использовать наш сайт, вы соглашаетесь с использованием файлов cookie.
+      </p>
+      <button class="cookie__button" onclick="acceptCookies()">Принять</button>
+    </div>
+
     <main class="main">
       <!-- <div class="container"> -->
       <div class="main__container">
@@ -588,7 +596,9 @@
                 автомобиля, включая замену масла, фильтров и осмотр тормозной
                 системы.
               </p>
-              <button class="service__button button">Записаться</button>
+              <a class="service__link" href="#contact-us"
+                ><button class="service__button button">Записаться</button></a
+              >
             </div>
             <div class="service__img">
               <img
@@ -604,7 +614,9 @@
                 Установка и балансировка колес для обеспечения плавности хода и
                 безопасности вождения.
               </p>
-              <button class="service__button button">Записаться</button>
+              <a class="service__link" href="#contact-us"
+                ><button class="service__button button">Записаться</button></a
+              >
             </div>
             <div class="service__img">
               <img
@@ -620,7 +632,9 @@
                 Проведение компьютерной диагностики двигателя для выявления и
                 устранения неисправностей.
               </p>
-              <button class="service__button button">Записаться</button>
+              <a class="service__link" href="#contact-us"
+                ><button class="service__button button">Записаться</button></a
+              >
             </div>
             <div class="service__img">
               <img
@@ -636,7 +650,9 @@
                 Замена колодок, дисков, регулировка тормозов для надежной и
                 безопасной работы системы.
               </p>
-              <button class="service__button button">Записаться</button>
+              <a class="service__link" href="#contact-us"
+                ><button class="service__button button">Записаться</button></a
+              >
             </div>
             <div class="service__img">
               <img
@@ -726,7 +742,7 @@
                 <label class="label__name" for="name">Ваше имя</label>
               </div>
 
-              <div class="form__group">
+              <div class="form__group warning__wrapper">
                 <input
                   class="input__phone"
                   id="phone"
@@ -737,6 +753,9 @@
                 />
                 <label class="label__phone" for="phone"
                   >Ваш сотовый телефон</label
+                >
+                <span class="warning__text hide"
+                  >Формат +7 (999) 999 - 99 - 99</span
                 >
               </div>
             </div>
@@ -859,6 +878,8 @@
       </div>
     </footer>
 
+    <!-- мобилка оверлей -->
+
     <script>
       const mobileMenu = document.querySelector(".mobile-overlay__body");
       const burger = document.querySelector(".burger__wrapper");
@@ -887,6 +908,8 @@
         });
       });
     </script>
+
+    <!-- пагинация -->
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -933,6 +956,8 @@
       });
     </script>
 
+    <!-- размер textarea -->
+
     <script>
       const textarea = document.getElementById("message");
 
@@ -955,13 +980,22 @@
 
       window.addEventListener("DOMContentLoaded", autoResize);
     </script>
-    <script>
-      let rawValue = ""; // Храним только цифры без маски
 
+    <!-- ввод цифр -->
+
+    <script>
       const phoneInput = document.getElementById("phone");
+      let rawValue = "";
+      let isWarning = false;
 
       phoneInput.addEventListener("input", function (e) {
         let value = e.target.value;
+
+        if (rawValue.length > 11) {
+          rawValue = rawValue.slice(0, 11);
+          e.target.value = formatPhoneNumber(rawValue);
+          return;
+        }
 
         if (!value.trim()) {
           rawValue = "";
@@ -969,27 +1003,45 @@
           return;
         }
 
-        const previousLength = rawValue.length;
-        const currentDigits = value.replace(/\D/g, "");
+        const lastChar = value.at(-1);
 
-        if (currentDigits.length > previousLength) {
-          rawValue = currentDigits;
-        } else if (currentDigits.length < previousLength) {
-          rawValue = currentDigits;
+        if (/\D/.test(lastChar)) {
+          e.target.value = value.slice(0, -1);
+          console.log("ай");
+          const warning = document.querySelector(".warning__wrapper span");
+          if (!isWarning) {
+            isWarning = true;
+            warning.classList.remove("hide");
+            warning.classList.add("show");
+
+            setTimeout(() => {
+              warning.classList.remove("show");
+              warning.classList.add("hide");
+              isWarning = false;
+            }, 2000);
+          }
+
+          return;
         }
+
+        rawValue = value.replace(/\D/g, "");
 
         e.target.value = formatPhoneNumber(rawValue);
       });
 
       phoneInput.addEventListener("keydown", function (e) {
-        // Обрабатываем Backspace
         if (e.key === "Backspace") {
           e.preventDefault();
+
           if (rawValue.length > 0) {
             rawValue = rawValue.slice(0, -1);
             phoneInput.value = formatPhoneNumber(rawValue);
           }
         }
+      });
+
+      phoneInput.addEventListener("click", function () {
+        this.setSelectionRange(this.value.length, this.value.length);
       });
 
       function formatPhoneNumber(number) {
@@ -1022,6 +1074,9 @@
         return formatted;
       }
     </script>
+
+    <!-- скролл хедера -->
+
     <script>
       let header = document.querySelector(".header");
 
@@ -1034,17 +1089,24 @@
       });
     </script>
 
+    <!-- куки баннер -->
+
     <script>
-      const qs = document.querySelectorAll(".faq__item");
-      function toggleAccordion() {
-        const question = this.querySelector(".faq__question");
-        const answer = this.querySelector(".faq__answer");
-        this.classList.toggle("active");
-        question.classList.toggle("active");
-        answer.classList.toggle("active");
+      function acceptCookies() {
+        localStorage.setItem("cookiesAccepted", "true");
+        document.querySelector(".cookie__banner").style.display = "none";
       }
-      qs.forEach((q) => q.addEventListener("click", toggleAccordion));
+
+      window.onload = function () {
+        if (!localStorage.getItem("cookiesAccepted")) {
+          document.querySelector(".cookie__banner").style.display = "flex";
+        } else {
+          document.querySelector(".cookie__banner").style.display = "none";
+        }
+      };
     </script>
+
+    <!-- эффект появление секции -->
 
     <!-- <script>
       const observer = new IntersectionObserver(
