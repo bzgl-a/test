@@ -1,0 +1,22 @@
+.sidebar {
+  width: 280px;
+  height: 100%;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-right: 1px solid #cecece;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.nav-link {
+  display: block;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #333;
+}
+
+.nav-link.active {
+  background-color: #e9ecef;
+  font-weight: bold;
+  border-radius: 4px;
+}

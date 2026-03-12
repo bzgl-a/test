@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header text-body-secondary">
+    <strong>{{ confirmationService.header }}</strong>
+  </div>
+  <div class="card-body">
+    <div>{{ confirmationService.body }}</div>
+    <div class="d-flex justify-content-end mt-3">
+      <button
+        class="btn btn-sm me-2"
+        [ngClass]="confirmationService.confirmButtonStyles"
+        (click)="confirmationService.modalRef?.componentInstance.confirm()"
+      >
+        ОК
+      </button>
+      <button
+        class="btn btn-sm"
+        (click)="confirmationService.modalRef?.componentInstance.cancel()"
+        [ngClass]="confirmationService.cancellButtonStyles"
+      >
+        Отмена
+      </button>
+    </div>
+  </div>
+</div>

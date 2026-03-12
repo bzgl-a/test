@@ -1,0 +1,78 @@
+.container {
+  margin: 0 auto;
+}
+
+.btn:hover {
+  filter: brightness(0.9);
+}
+
+.year-calendar {
+  display: grid;
+  grid-template-columns: repeat(4, 250px);
+  gap: 40px;
+}
+
+.calendar-month {
+  position: relative;
+}
+
+.week-days {
+  width: 100%;
+  height: 40px;
+}
+
+.week-day:nth-child(6),
+.week-day:nth-child(7) {
+  color: #ff1a1a;
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.empty-day {
+  height: 28px;
+}
+
+.day-cell {
+  height: 28px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+
+  transition: filter 0.3s ease;
+
+  &.load-1 {
+    background-color: #94e497;
+  }
+  &.load-2 {
+    background-color: #ffe4bc;
+  }
+  &.load-3 {
+    background-color: #ffaea9;
+  }
+
+  &.is-weekend {
+    .day-number {
+      color: #ff1a1a;
+      font-weight: 700;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(0.95);
+  }
+
+  .day-number {
+    font-size: 11px;
+    color: #000;
+    font-weight: 500;
+  }
+}
+
+.chosen-day-popup {
+  left: calc(100% + 40px);
+  top: 0;
+}

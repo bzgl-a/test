@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h4 class="modal-title">Отклонить заявку</h4>
+  <button
+    type="button"
+    class="btn-close"
+    (click)="activeModal.dismiss()"
+  ></button>
+</div>
+<div class="modal-body">
+  <div class="mb-3">
+    <label class="form-label"
+      >Причина отклонения <span class="text-danger">*</span></label
+    >
+    <textarea
+      class="form-control"
+      rows="3"
+      [(ngModel)]="reason"
+      placeholder="Укажите причину отклонения заявки"
+      required
+    ></textarea>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-secondary"
+    (click)="activeModal.dismiss()"
+  >
+    Отмена
+  </button>
+  <button
+    type="button"
+    class="btn btn-danger"
+    (click)="onReject()"
+    [disabled]="!reason.trim()"
+  >
+    Отклонить
+  </button>
+</div>

@@ -1,0 +1,15 @@
+.wrapper {
+  overflow: auto;
+  min-width: 280px;
+  max-height: 500px;
+}
+
+.initials {
+  width: 37px;
+  aspect-ratio: 1;
+  background-color: rgb(225, 225, 225);
+}
+
+.user:not(:last-child) {
+  border-bottom: 1px solid #dee2e6;
+}

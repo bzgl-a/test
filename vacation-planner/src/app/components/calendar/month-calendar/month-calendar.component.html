@@ -1,0 +1,91 @@
+<div class="month-wrapper p-3">
+  <div class="mb-4 d-flex align-items-center gap-3">
+    <button class="btn-back py-2 px-3 border rounded-2" (click)="onBack()">
+      ← Назад к году
+    </button>
+    <button
+      class="btn py-1 px-2 border rounded-3 btn-outline-secondary"
+      (click)="navigateMonth(-1)"
+    >
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <h1 class="m-0 fs-4">{{ getMonthName() }} {{ year }}</h1>
+    <button
+      class="btn py-1 px-2 border rounded-3 btn-outline-secondary"
+      (click)="navigateMonth(1)"
+    >
+      <i class="bi bi-chevron-right"></i>
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Загрузка данных...</p>
+    </div>
+  } @else if (employeesVM.length === 0) {
+    <div class="empty-state">
+      <p>Нет данных об отсутствиях в этом месяце</p>
+    </div>
+  } @else {
+    <div class="calendar-container border rounded-2 overflow-hidden">
+      <div class="employees-section">
+        <div
+          class="header-cell p-2 d-flex align-items-center justify-content-center bg-light border-bottom border-end fw-medium"
+        >
+          <span> Сотрудник </span>
+        </div>
+        @for (employee of employeesVM; track $index) {
+          <div
+            class="employee-cell p-2 d-flex align-items-center justify-content-center border-end border-bottom bg-light"
+          >
+            {{ employee.last_name }} {{ employee.first_name }}
+          </div>
+        }
+      </div>
+
+      <div class="overflow-auto">
+        <div class="days-header" [style.--days-count]="days.length">
+          @for (day of days; track $index) {
+            <div
+              class="day-header p-1 d-flex flex-column gap-1 text-center border-end border-bottom bg-light"
+              [class.weekend]="isWeekend[day - 1]"
+            >
+              <span>{{ getDayOfWeek(day) }}</span>
+              <span>{{ day }}</span>
+            </div>
+          }
+        </div>
+
+        @for (employee of employeesVM; track $index) {
+          <div class="days-body" [style.--days-count]="days.length">
+            @for (day of days; track $index) {
+              <div
+                class="day-cell border-end border-bottom"
+                [style.background-color]="
+                  employee.absenceColors[day - 1] ??
+                  (isWeekend[day - 1] ? '#ffebee' : 'transparent')
+                "
+              ></div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="mt-3 d-flex justify-content-center flex-wrap gap-3">
+      <span class="d-flex align-items-center gap-2">
+        <span class="color-box vacation"></span>
+        Отпуск
+      </span>
+      <span class="d-flex align-items-center gap-2">
+        <span class="color-box day_off"></span>
+        Отгул
+      </span>
+      <span class="d-flex align-items-center gap-2">
+        <span class="color-box weekend"></span>
+        Выходной
+      </span>
+    </div>
+  }
+</div>

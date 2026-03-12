@@ -1,0 +1,146 @@
+<div class="container mt-3 p-0 d-flex flex-column align-items-center gap-5">
+  <h1>Подать заявку на отпуск</h1>
+
+  <form
+    class="form d-flex flex-column gap-3"
+    [formGroup]="vacationRequestForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <!-- Диапазон дат -->
+    <div>
+      <label class="form-label">Диапазон дат</label>
+      <div class="d-flex align-items-center gap-2">
+        <div class="dp-hidden position-absolute input-group">
+          <input
+            name="datepicker"
+            class="form-control"
+            ngbDatepicker
+            #datepicker="ngbDatepicker"
+            [autoClose]="'outside'"
+            (dateSelect)="onDateSelection($event)"
+            [displayMonths]="2"
+            [dayTemplate]="t"
+            outsideDays="hidden"
+            [startDate]="fromDate!"
+            tabindex="-1"
+            [minDate]="minDate"
+          />
+        </div>
+
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="дд.мм.гггг"
+            [value]="formatDateToInput(fromDate)"
+            (click)="datepicker.toggle()"
+            (keydown.space)="datepicker.toggle(); $event.preventDefault()"
+            readonly
+          />
+          <button
+            class="btn btn-outline-secondary bi bi-calendar3"
+            (click)="datepicker.toggle()"
+            type="button"
+          ></button>
+        </div>
+
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="дд.мм.гггг"
+            [value]="formatDateToInput(toDate)"
+            (click)="datepicker.toggle()"
+            (keydown.space)="datepicker.toggle(); $event.preventDefault()"
+            readonly
+          />
+          <button
+            class="btn btn-outline-secondary bi bi-calendar3"
+            (click)="datepicker.toggle()"
+            type="button"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Тип заявки -->
+    <div>
+      <label class="form-label">Тип заявки</label>
+      <div ngbDropdown #vacationTypeDrop="ngbDropdown">
+        <button
+          type="button"
+          ngbDropdownToggle
+          class="btn border-secondary rounded btn-sm d-flex align-items-center justify-content-between gap-3 w-100 text-start"
+          [class.focused]="vacationTypeDrop.isOpen()"
+          aria-haspopup="listbox"
+          [attr.aria-expanded]="vacationTypeDrop.isOpen()"
+        >
+          <span>
+            {{
+              vacationRequestForm.value.vacationType
+                ? labelService.getVacationTypeLabel(
+                    vacationRequestForm.value.vacationType
+                  )
+                : "Выберите тип отпуска"
+            }}
+          </span>
+        </button>
+        <div
+          ngbDropdownMenu
+          class="dropdown-menu shadow rounded-3 p-0 z-2 w-100"
+          role="listbox"
+        >
+          <div class="py-1">
+            @for (type of labelService.vacationTypes; track type.value) {
+              <button
+                type="button"
+                class="dropdown-item d-flex align-items-center gap-2 px-3 py-2"
+                role="option"
+                (click)="
+                  selectVacationType(type.value); vacationTypeDrop.close()
+                "
+                [class.active]="
+                  vacationRequestForm.value.vacationType === type.value
+                "
+              >
+                <span>{{ type.label }}</span>
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Комментарий -->
+    <div>
+      <label class="form-label">Комментарий (опционально)</label>
+      <textarea
+        class="form-control"
+        rows="3"
+        formControlName="comment"
+      ></textarea>
+    </div>
+
+    <!-- Кнопка отправки -->
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="vacationRequestForm.invalid"
+    >
+      Отправить заявку
+    </button>
+  </form>
+</div>
+
+<!-- Шаблон дня -->
+<ng-template #t let-date let-focused="focused" let-disabled="disabled">
+  <span
+    class="custom-day"
+    [class.focused]="focused"
+    [class.disabled]="disabled"
+    [class.range]="isRange(date)"
+    [class.faded]="isHovered(date) || isInside(date)"
+    (mouseenter)="hoveredDate = date"
+    (mouseleave)="hoveredDate = null"
+  >
+    {{ date.day }}
+  </span>
+</ng-template>

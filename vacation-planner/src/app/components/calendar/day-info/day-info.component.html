@@ -1,0 +1,30 @@
+@if (dayInfo.length) {
+  <div class="wrapper border rounded-2">
+    <div class="px-3 py-2 text-center bg-light border-bottom">
+      <span class="fs-6">Отсутствуют {{ formatDate(chosenDay) }}</span>
+    </div>
+    <div class="py-1 d-flex flex-column gap-0">
+      @for (employee of dayInfo; track employee) {
+        <div class="user p-2 d-flex align-items-center gap-2">
+          <span
+            class="initials p-1 d-flex align-items-center justify-content-center rounded-circle fs-6"
+            >{{ getInitials(employee.last_name, employee.first_name) }}</span
+          >
+          <div class="w-100 d-flex flex-column align-items-start gap-0">
+            <span class="fw-medium"
+              >{{ employee.last_name }} {{ employee.first_name }}</span
+            >
+            <div class="w-100 d-flex align-items-center gap-2">
+              <span style="font-size: 12px">
+                {{ labelService.getVacationTypeLabel(employee.type) }}
+              </span>
+              <span style="font-size: 12px">
+                {{ convertDate(employee.start_date, employee.end_date) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+}

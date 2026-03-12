@@ -1,0 +1,23 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { DayInfoComponent } from './day-info.component';
+
+describe('DayInfoComponent', () => {
+  let component: DayInfoComponent;
+  let fixture: ComponentFixture<DayInfoComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DayInfoComponent]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(DayInfoComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

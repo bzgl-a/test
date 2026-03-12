@@ -1,0 +1,32 @@
+<div class="container mt-3 p-0">
+  <div class="row w-75 mb-4 mt-4">
+    <h1 class="col-sm">Заявки отдела</h1>
+  </div>
+
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <li [ngbNavItem]="1">
+      <button ngbNavLink>Мои заявки</button>
+      <ng-template ngbNavContent>
+        <app-requests-list
+          [vacationRequests]="myVacationRequests"
+          [showUserNames]="false"
+          [currentYear]="currentYear"
+          (yearChanged)="onYearChange($event)"
+        ></app-requests-list>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <button ngbNavLink>Заявки коллег</button>
+      <ng-template ngbNavContent>
+        <app-requests-list
+          [vacationRequests]="teamVacationRequests"
+          [showUserNames]="true"
+          [currentYear]="currentYear"
+          (yearChanged)="onYearChange($event)"
+        ></app-requests-list>
+      </ng-template>
+    </li>
+  </ul>
+</div>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>

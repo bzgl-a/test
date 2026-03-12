@@ -1,0 +1,27 @@
+<div class="sidebar">
+  <button
+    class="ms-2 mt-3 btn btn-sm btn-outline-dark"
+    routerLink="/new-request"
+  >
+    <i class="bi bi-plus-lg"></i>
+    <span> Новая заявка </span>
+  </button>
+  <ul class="mt-3 list-unstyled">
+    @for (item of sidebar; track item.link) {
+      @if (item.hasRights) {
+        <li>
+          <a
+            [routerLink]="item.link"
+            routerLinkActive="active"
+            class="nav-link d-flex align-items-center gap-2"
+          >
+            <i [class]="item.icon"></i>
+            <span>
+              {{ item.label }}
+            </span>
+          </a>
+        </li>
+      }
+    }
+  </ul>
+</div>

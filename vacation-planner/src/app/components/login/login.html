@@ -1,0 +1,43 @@
+<div class="login-container">
+  <div class="login-card">
+    <h1 class="login-title">Вход</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          class="input-field"
+          placeholder=" "
+          [class.is-invalid]="username.invalid && username.touched"
+        />
+        <label for="username" class="input-label">Логин</label>
+      </div>
+
+      <div class="input-group">
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder=" "
+          class="input-field"
+          [class.is-invalid]="password.invalid && password.touched"
+        />
+        <label for="password" class="input-label">Пароль</label>
+      </div>
+
+      <button
+        type="submit"
+        class="btn-submit"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        @if (!isLoading) {
+          <span>Войти</span>
+        }
+        @if (isLoading) {
+          <span>Загрузка...</span>
+        }
+      </button>
+    </form>
+  </div>
+</div>
